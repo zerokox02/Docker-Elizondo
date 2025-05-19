@@ -1,0 +1,26 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Login a Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: kaliyn
+        password: dckr_pat_ydWsCsLIuZOzNLTzzBhKFORUVBI
+
+    - name: Build and Push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
