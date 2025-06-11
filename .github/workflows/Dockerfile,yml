@@ -1,26 +1,31 @@
-name: Build and Push Docker image
+name: Build Docker image
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout código
-      uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-    - name: Login a Docker Hub
-      uses: docker/login-action@v2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
       with:
         username: kaliyn
-        password: dckr_pat_ydWsCsLIuZOzNLTzzBhKFORUVBI
+        password: dckr_pat_02WT6mdk_1F_K9r5yieZ8Kaq2_0
 
-    - name: Build y Push de la imagen
-      uses: docker/build-push-action@v3
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
       with:
-        push: true
-        tags: kaliyn/docker-elizondo:v1
+        context: .
+        push: false   # Cambia a true si quieres subir la imagen a DockerHub
+        tags: kaliyn/dockerejemplo:latest
