@@ -16,7 +16,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: kaliyn
-          password: dckr_pat_xxxxxxxxxxxxxxxxxx
+          password: dckr_pat_02WT6mdk_1F_K9r5yieZ8Kaq2_0
 
       - name: Construir imagen con Buildx
         uses: docker/build-push-action@v5
