@@ -1,0 +1,44 @@
+name: CI Docker Build & Bake
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: kaliyn
+          password: dckr_pat_xxxxxxxxxxxxxxxxxx
+
+      - name: Construir imagen con Buildx
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          tags: kaliyn/dockerejemplo:latest
+          push: false
+
+  bake:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: kaliyn
+          password: dckr_pat_02WT6mdk_1F_K9r5yieZ8Kaq2_0
+
+      - name: Ejecutar Docker Bake
+        uses: docker/bake-action@v4
+        with:
+          files: docker-bake.hcl
